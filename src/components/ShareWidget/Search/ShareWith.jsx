@@ -3,19 +3,24 @@ import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 
+const ShareWithListitemStyles = {
+    display: "flex",
+    alignItems: "center",
+    ":hover": {
+        background: "#F3F4F6",
+        transition: "ease-in-out 0.1s",
+        cursor: "pointer",
+    },
+    ":active": {
+        background: "#E8E8E8"
+    }
+}
+
 const ShareWithListitem = ({ item, selectShareItem }) => {
     const { name, email, deptCode, empId } = item
     const isPerson = Boolean(empId)
 
-    return <ListItem alignItems="center" sx={{
-        display: "flex", ":hover": {
-            background: "#F3F4F6",
-            transition: "ease-in-out 0.1s",
-            cursor: "pointer",
-        }, ":active": {
-            background: "#E8E8E8"
-        }
-    }} onClick={() => selectShareItem(isPerson ? email : deptCode, name, item)}>
+    return <ListItem alignItems="center" sx={ShareWithListitemStyles} onClick={() => selectShareItem(isPerson ? email : deptCode, name, item)}>
         <Avatar variant={isPerson ? 'circular' : 'rounded'} alt={`${name} image`} sx={{ width: 35, height: 35, textAlign: "center", marginRight: "16px" }} src={isPerson ? "./avatar.jpg" : "./"} />
         <Typography variant="body1">{name}</Typography>
     </ListItem>

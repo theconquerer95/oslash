@@ -9,6 +9,21 @@ import Access from '../../Access'
 import ShareWith from './ShareWith'
 import SearchBar from './SearchBar'
 
+const CancelButtonStyles = {
+    background: "#FFF",
+    color: "#000",
+    textTransform: "capitalize",
+    marginRight: "4px",
+    ":hover": {
+        background: "#F3F4F6",
+        transition: "ease-in-out 0.1s",
+        cursor: "pointer",
+    },
+    ":active": {
+        background: "#E8E8E8"
+    }
+}
+
 const SearchPopover = ({ data, closeSearch, shareWith }) => {
     const [chipData, setChipData] = useState([]);
     const [dataToRender, setDataToRender] = useState(data)
@@ -52,17 +67,7 @@ const SearchPopover = ({ data, closeSearch, shareWith }) => {
         <Box sx={{ background: "#E5E7EB", padding: "8px", display: "flex", justifyContent: "space-between" }}>
             <Typography variant="subtitle2" color="#818181"><HelpCenterOutlinedIcon fontSize="small" sx={{ marginRight: "2px" }} />learn about sharing</Typography>
             <span>
-                <Button size="small" sx={{
-                    background: "#FFF",
-                    color: "#000",
-                    textTransform: "capitalize", marginRight: "4px", ":hover": {
-                        background: "#F3F4F6",
-                        transition: "ease-in-out 0.1s",
-                        cursor: "pointer",
-                    }, ":active": {
-                        background: "#E8E8E8"
-                    }
-                }} disableElevation variant="contained" onClick={closeSearch}>Cancel</Button>
+                <Button size="small" sx={CancelButtonStyles} disableElevation variant="contained" onClick={closeSearch}>Cancel</Button>
                 <Button size="small" sx={{ textTransform: "capitalize" }} disableElevation variant="contained" onClick={inviteAll}>Invite</Button>
             </span>
         </Box>
