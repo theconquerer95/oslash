@@ -4,13 +4,9 @@ import { ShareWidget } from '../components';
 export default {
     title: 'Example/ShareWidget',
     component: ShareWidget,
-    // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-    // argTypes: {
-    //     backgroundColor: { control: 'color' },
-    // },
 };
 
-const data = {
+const orgData = {
     people: [{
         name: "Tom Cook",
         email: "tom@oslash.com",
@@ -24,10 +20,14 @@ const data = {
         email: "arlene@oslash.com",
         empId: "oslash3456"
     }],
-    groups: [{ name: "Product", deptCode: "prod" }, { name: "Engineering", deptCode: "engg" }]
+    groups: [{ name: "Product", deptCode: "prod", members: ["tom@oslash.com"] }, { name: "Engineering", deptCode: "engg", members: ["wade@oslash.com", "arlene@oslash.com"] }]
 }
 
-const Template = (args) => <ShareWidget {...args} data={data} />;
+const sharedWith = [
+    { name: "Every At Oslash", deptCode: "all", members: ["ravi@oslash.com", "pooja@oslash.com", "ayush@oslash.com", "anil@oslash.com"], access: 'full' }
+]
+
+const Template = (args) => <ShareWidget {...args} sharedWith={sharedWith} orgData={orgData} />;
 
 export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args

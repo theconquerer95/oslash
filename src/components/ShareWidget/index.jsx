@@ -3,14 +3,13 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import ShareIcon from '@mui/icons-material/Share';
 import Popover from '@mui/material/Popover';
-import SharePopoverContent from './SharePopover';
-import SearchPopoverContent from "./SearchPopover"
-import './index.css'
+import SharePopoverContent from './Share/SharePopover';
+import SearchPopoverContent from "./Search/SearchPopover"
 
 
-const ShareWidget = ({ data }) => {
+const ShareWidget = ({ sharedWith: sharedWithData, orgData }) => {
     const [anchorEl, setAnchorEl] = useState(null);
-    const [sharedWith, setSharedWith] = useState([])
+    const [sharedWith, setSharedWith] = useState(sharedWithData)
     const [shoudldShowSearch, setShouldShouldSearch] = useState(false)
 
     const handleShowSearch = () => {
@@ -52,8 +51,8 @@ const ShareWidget = ({ data }) => {
                 vertical: 'bottom',
                 horizontal: 'left',
             }}
-        ><Box elevation={0} sx={{ width: "500px", borderRadius: "8px" }}>
-                {!shoudldShowSearch ? <SharePopoverContent handleShowSearch={handleShowSearch} sharedWith={sharedWith} /> : <SearchPopoverContent data={data} closeSearch={handleHideSearch} shareWith={shareWith} />}
+        ><Box sx={{ width: "500px", borderRadius: "8px" }}>
+                {!shoudldShowSearch ? <SharePopoverContent handleShowSearch={handleShowSearch} sharedWith={sharedWith} /> : <SearchPopoverContent data={orgData} closeSearch={handleHideSearch} shareWith={shareWith} />}
             </Box>
         </Popover>
     </div >
