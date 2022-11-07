@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Button from '@mui/material/Button';
-import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
 import ShareIcon from '@mui/icons-material/Share';
 import Popover from '@mui/material/Popover';
 import SharePopoverContent from './SharePopover';
@@ -8,8 +8,9 @@ import SearchPopoverContent from "./SearchPopover"
 import './index.css'
 
 
-const ShareWidget = () => {
+const ShareWidget = ({ data }) => {
     const [anchorEl, setAnchorEl] = useState(null);
+    const [sharedWith, setSharedWith] = useState([])
     const [shoudldShowSearch, setShouldShouldSearch] = useState(false)
 
     const handleShowSearch = () => {
@@ -25,6 +26,10 @@ const ShareWidget = () => {
         setAnchorEl(event.currentTarget);
     };
 
+    const shareWith = (toBeSharedWith = []) => {
+        // Make some backend API call
+        setSharedWith([...sharedWith, ...toBeSharedWith])
+    }
 
     const handleClosePopover = () => {
         setAnchorEl(null);
@@ -47,9 +52,9 @@ const ShareWidget = () => {
                 vertical: 'bottom',
                 horizontal: 'left',
             }}
-        ><Paper elevation={0} sx={{ width: "500px" }}>
-                {!shoudldShowSearch ? <SharePopoverContent handleShowSearch={handleShowSearch} /> : <SearchPopoverContent />}
-            </Paper>
+        ><Box elevation={0} sx={{ width: "500px", borderRadius: "8px" }}>
+                {!shoudldShowSearch ? <SharePopoverContent handleShowSearch={handleShowSearch} sharedWith={sharedWith} /> : <SearchPopoverContent data={data} closeSearch={handleHideSearch} shareWith={shareWith} />}
+            </Box>
         </Popover>
     </div >
 
