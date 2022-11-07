@@ -11,6 +11,7 @@ import Avatar from '@mui/material/Avatar';
 import Chip from '@mui/material/Chip';
 import Box from '@mui/material/Box';
 import HelpCenterOutlinedIcon from '@mui/icons-material/HelpCenterOutlined';
+import Fuse from 'fuse.js'
 
 const ShareWith = ({ data, selectShareItem }) => <>
     {data?.people?.length > 0 && (<List>
@@ -39,7 +40,7 @@ const ShareWith = ({ data, selectShareItem }) => <>
             }, ":active": {
                 background: "#E8E8E8"
             }
-        }} onClick={() => selectShareItem(group.code, group.name, group)}>
+        }} onClick={() => selectShareItem(group.deptCode, group.name, group)}>
             <Avatar variant="rounded" alt={`${group.name} image`} sx={{ width: 35, height: 35, textAlign: "center", marginRight: "16px" }} src="./" />
             <Typography variant="body1">{group.name}</Typography>
         </ListItem>)}
@@ -49,6 +50,40 @@ const ShareWith = ({ data, selectShareItem }) => <>
 
 const SearchPopover = ({ data, closeSearch, shareWith }) => {
     const [chipData, setChipData] = useState([]);
+    const [query, setQuery] = useState('');
+    const [listData, setListData] = useState(data)
+
+    const options = {
+        keys: ['name']
+    }
+    const fuse = new Fuse([...data.people, ...data.groups], options)
+
+    const handleSearchChange = (event) => {
+        setQuery(event.target.value)
+    }
+
+    const handleSearchKeyPress = (event) => {
+        if (event.key === "Enter") {
+            const cleanedQuery = query.trim();
+            if (cleanedQuery !== '') {
+                const result = fuse.search(cleanedQuery)
+                setListData(result.reduce((acc, curr) => {
+                    if (curr.item.empId) {
+                        if (!acc.people)
+                            acc.people = []
+                        acc.people.push(curr.item)
+                    }
+                    else {
+                        if (!acc.groups)
+                            acc.groups = []
+                        acc.groups.push(curr.item)
+                    }
+                    return acc
+                }, {}))
+            }
+        }
+    }
+
 
     const handleDelete = (chipToDelete) => () => {
         setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
@@ -81,7 +116,7 @@ const SearchPopover = ({ data, closeSearch, shareWith }) => {
                     </ListItem>
                 )
                 )}</Box>
-                <Input size="small" sx={{ padding: "4px 8px", fontSize: "0.88rem", flexGrow: "1" }} placeholder="Search emails, names or groups" disableUnderline />
+                <Input size="small" sx={{ padding: "4px 8px", fontSize: "0.88rem", flexGrow: "1" }} placeholder="Search emails, names or groups" disableUnderline onKeyPress={handleSearchKeyPress} value={query} onChange={handleSearchChange} />
             </Box>
             <FormControl variant="standard" sx={{ borderStyle: "none", marginX: "4px", color: "#6B7280" }} size="small" >
                 <Select
@@ -97,7 +132,7 @@ const SearchPopover = ({ data, closeSearch, shareWith }) => {
                 </Select>
             </FormControl>
         </Box>
-        <ShareWith data={data} selectShareItem={selectShareItem} />
+        <ShareWith data={listData} selectShareItem={selectShareItem} />
         <Box sx={{ background: "#E5E7EB", padding: "8px", display: "flex", justifyContent: "space-between" }}>
             <Typography variant="subtitle2" color="#818181"><HelpCenterOutlinedIcon fontSize="small" sx={{ marginRight: "2px" }} />learn about sharing</Typography>
             <span>

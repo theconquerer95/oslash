@@ -13,15 +13,18 @@ export default {
 const data = {
     people: [{
         name: "Tom Cook",
-        email: "tom@oslash.com"
+        email: "tom@oslash.com",
+        empId: "oslash1234"
     }, {
         name: "Wade Cooper",
-        email: "wade@oslash.com"
+        email: "wade@oslash.com",
+        empId: "oslash2345",
     }, {
         name: "Arlene Mccoy",
-        email: "arlene@oslash.com"
+        email: "arlene@oslash.com",
+        empId: "oslash3456"
     }],
-    groups: [{ name: "Product", code: "prod" }, { name: "Engineering", code: "engg" }]
+    groups: [{ name: "Product", deptCode: "prod" }, { name: "Engineering", deptCode: "engg" }]
 }
 
 const Template = (args) => <ShareWidget {...args} data={data} />;
