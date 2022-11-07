@@ -10,8 +10,21 @@ export default {
     // },
 };
 
+const data = {
+    people: [{
+        name: "Tom Cook",
+        email: "tom@oslash.com"
+    }, {
+        name: "Wade Cooper",
+        email: "wade@oslash.com"
+    }, {
+        name: "Arlene Mccoy",
+        email: "arlene@oslash.com"
+    }],
+    groups: [{ name: "Product", code: "prod" }, { name: "Engineering", code: "engg" }]
+}
 
-const Template = (args) => <ShareWidget {...args} />;
+const Template = (args) => <ShareWidget {...args} data={data} />;
 
 export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
